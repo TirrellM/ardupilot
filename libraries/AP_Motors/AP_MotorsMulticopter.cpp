@@ -137,33 +137,61 @@ const AP_Param::GroupInfo AP_MotorsMulticopter::var_info[] = {
     // @User: Advanced
     AP_GROUPINFO("HOVER_LEARN", 22, AP_MotorsMulticopter, _throttle_hover_learn, HOVER_LEARN_AND_SAVE),
 
-    // @Param: ONE_MP
+    // @Param: MP_ONE
     // @DisplayName: Midpoint Motor One
     // @Description: Adjust the midpoint for motor one
     // @Range: 750 2250
     // @User: Advanced
-    AP_GROUPINFO("ONE_MP", 23, AP_MotorsMulticopter, _motor_one_midpoint, 1500),
+    AP_GROUPINFO("MP_ONE", 23, AP_MotorsMulticopter, _M_1_MP, 1500),
 
-    // @Param: TWO_MP
+    // @Param: MP_TWO
     // @DisplayName: Midpoint Motor two
     // @Description: Adjust the midpoint for motor two
     // @Range: 750 2250
     // @User: Advanced
-    AP_GROUPINFO("TWO_MP", 24, AP_MotorsMulticopter, _motor_two_midpoint, 1500),
+    AP_GROUPINFO("MP_TWO", 24, AP_MotorsMulticopter, _M_2_MP, 1500),
 
-    // @Param: THREE_MP
+    // @Param: MP_THREE
     // @DisplayName: Midpoint Motor three
     // @Description: Adjust the midpoint for motor three
     // @Range: 750 2250
     // @User: Advanced
-    AP_GROUPINFO("THREE_MP", 25, AP_MotorsMulticopter, _motor_three_midpoint, 1500),
+    AP_GROUPINFO("MP_THREE", 25, AP_MotorsMulticopter, _M_3_MP, 1500),
 
-    // @Param: FOUR_MP
+    // @Param: MP_FOUR
     // @DisplayName: Midpoint Motor Four
     // @Description: Adjust the midpoint for motor four
     // @Range: 750 2250
     // @User: Advanced
-    AP_GROUPINFO("FOUR_MP", 26, AP_MotorsMulticopter, _motor_four_midpoint, 1500),
+    AP_GROUPINFO("MP_FOUR", 26, AP_MotorsMulticopter, _M_4_MP, 1500),
+
+    // @Param: DIR_ONE
+    // @DisplayName: Direction Motor One
+    // @Description: Adjust the direct for motor servo
+    // @Values: -1.0 1.0
+    // @User: Advanced
+    AP_GROUPINFO("DIR_ONE", 27, AP_MotorsMulticopter, _M_1_Dir, 1.0),
+
+    // @Param: DIR_TWO
+    // @DisplayName: Direction Motor Two
+    // @Description: Adjust the direct for motor servo
+    // @Values: -1.0 1.0
+    // @User: Advanced
+    AP_GROUPINFO("DIR_TWO", 28, AP_MotorsMulticopter, _M_2_Dir, 1.0),
+
+    // @Param: DIR_THREE
+    // @DisplayName: Direction Motor Three
+    // @Description: Adjust the direct for motor servo
+    // @Values: -1.0 1.0
+    // @User: Advanced
+    AP_GROUPINFO("DIR_THREE", 29, AP_MotorsMulticopter, _M_3_Dir, 1.0),
+
+    // @Param: DIR_FOUR
+    // @DisplayName: Direction Motor Four
+    // @Description: Adjust the direct for motor servo
+    // @Values: -1.0 1.0
+    // @User: Advanced
+    AP_GROUPINFO("DIR_FOUR", 30, AP_MotorsMulticopter, _M_4_Dir, 1.0),
 
     AP_GROUPEND
 };
