@@ -21,6 +21,13 @@
 #include <AP_HAL/AP_HAL.h>
 #include "AP_MotorsMatrix.h"
 
+////////////
+
+#if HAL_OS_POSIX_IO
+#include <stdio.h>
+#endif
+/////////////////////
+
 extern const AP_HAL::HAL& hal;
 
 // Init
@@ -111,7 +118,14 @@ void AP_MotorsMatrix::output_to_motors()
             // set motor output based on thrust requests
             for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
                 if (motor_enabled[i]) {
-                    motor_out[i] = calc_thrust_to_pwm(_thrust_rpyt_out[i]);
+                    //////////////////////////////////////////////////////
+                    //Pass through PWM value for the servo controller
+                    //////////////////////////////////////////////////////
+                    if (i > 3){
+                        motor_out[i] = _thrust_rpyt_out[i];
+                    } else {
+                        motor_out[i] = calc_thrust_to_pwm(_thrust_rpyt_out[i]);
+                    }
                 }
             }
             break;
@@ -224,7 +238,10 @@ void AP_MotorsMatrix::output_armed_stabilizing()
     rpy_low = 0.0f;
     rpy_high = 0.0f;
     for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
-        if (motor_enabled[i]) {
+        /////////////////////////////
+        //ADDED the & i<4 so that we dont add YAW to the other channels
+        ////////////////////////////
+        if (motor_enabled[i] && i<4) {
             _thrust_rpyt_out[i] = _thrust_rpyt_out[i] + yaw_thrust * _yaw_factor[i];
 
             // record lowest roll+pitch+yaw command
@@ -267,12 +284,47 @@ void AP_MotorsMatrix::output_armed_stabilizing()
         }
     }
 
+    ///////////////////////////////////////////
+    //_thrust_rpyt_out[i]  ----> this has the motor thrust scale based on hover requirements -1 - +1
+
     // add scaled roll, pitch, constrained yaw and throttle for each motor
     for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
         if (motor_enabled[i]) {
-            _thrust_rpyt_out[i] = throttle_thrust_best_rpy + thr_adj + rpy_scale*_thrust_rpyt_out[i];
+           if(_spool_mode == THROTTLE_UNLIMITED) {
+                // set motor output based on thrust requests
+                //Gain DATA on the mixing numbers
+                hal.console->printf("Motor: %1.f : %.6f  ", (float)i, (float)_thrust_rpyt_out[i]);
+
+           }
+           //////////////////////////////////
+           //For motors >4 dont worry about the throttle mix
+           /////////////////////////////////
+
+           if(i>3) {
+               //servo remains upright because it needs to go backwards
+               if(_thrust_rpyt_out[i]>0){
+                   _thrust_rpyt_out[i] = 0.0f;
+                   // todo: need to implement servo centering
+                   // todo: need to implement servo direction
+
+               //tilt the motor out
+               } else {
+                   // todo: scale from 1 - -1 to midpoint - (midpoint + 500) http://gamedev.stackexchange.com/questions/33441/how-to-convert-a-number-from-one-min-max-set-to-another-min-max-set
+               }
+
+           } else {
+               //ORIGINAL CODE
+               _thrust_rpyt_out[i] = throttle_thrust_best_rpy + thr_adj + rpy_scale*_thrust_rpyt_out[i];
+           }
+
         }
     }
+
+    if(_spool_mode == THROTTLE_UNLIMITED) {
+        hal.console->printf("\n");
+    }
+
+
 
     // constrain all outputs to 0.0f to 1.0f
     // test code should be run with these lines commented out as they should not do anything
@@ -292,6 +344,11 @@ void AP_MotorsMatrix::output_test(uint8_t motor_seq, int16_t pwm)
     if (!armed()) {
         return;
     }
+
+    // printf test
+    hal.console->printf("pwm:");
+    hal.console->printf("%.6f motor# %.6f \n", (float)pwm, (float)AP_MOTORS_MAX_NUM_MOTORS );
+   // hal.console->printf("\n");
 
     // loop through all the possible orders spinning any motors that match that description
     hal.rcout->cork();

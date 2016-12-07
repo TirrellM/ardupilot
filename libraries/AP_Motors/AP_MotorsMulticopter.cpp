@@ -137,6 +137,34 @@ const AP_Param::GroupInfo AP_MotorsMulticopter::var_info[] = {
     // @User: Advanced
     AP_GROUPINFO("HOVER_LEARN", 22, AP_MotorsMulticopter, _throttle_hover_learn, HOVER_LEARN_AND_SAVE),
 
+    // @Param: ONE_MP
+    // @DisplayName: Midpoint Motor One
+    // @Description: Adjust the midpoint for motor one
+    // @Range: 750 2250
+    // @User: Advanced
+    AP_GROUPINFO("ONE_MP", 23, AP_MotorsMulticopter, _motor_one_midpoint, 1500),
+
+    // @Param: TWO_MP
+    // @DisplayName: Midpoint Motor two
+    // @Description: Adjust the midpoint for motor two
+    // @Range: 750 2250
+    // @User: Advanced
+    AP_GROUPINFO("TWO_MP", 24, AP_MotorsMulticopter, _motor_two_midpoint, 1500),
+
+    // @Param: THREE_MP
+    // @DisplayName: Midpoint Motor three
+    // @Description: Adjust the midpoint for motor three
+    // @Range: 750 2250
+    // @User: Advanced
+    AP_GROUPINFO("THREE_MP", 25, AP_MotorsMulticopter, _motor_three_midpoint, 1500),
+
+    // @Param: FOUR_MP
+    // @DisplayName: Midpoint Motor Four
+    // @Description: Adjust the midpoint for motor four
+    // @Range: 750 2250
+    // @User: Advanced
+    AP_GROUPINFO("FOUR_MP", 26, AP_MotorsMulticopter, _motor_four_midpoint, 1500),
+
     AP_GROUPEND
 };
 

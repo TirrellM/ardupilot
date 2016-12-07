@@ -162,6 +162,12 @@ protected:
     AP_Float            _throttle_hover;        // estimated throttle required to hover throttle in the range 0 ~ 1
     AP_Int8             _throttle_hover_learn;  // enable/disabled hover thrust learning
 
+    //Tirrells Parameters
+    AP_Int16             _motor_one_midpoint;  // allows the adjustment of the midpoint of the motor servo
+    AP_Int16             _motor_two_midpoint;  // allows the adjustment of the midpoint of the motor servo
+    AP_Int16             _motor_three_midpoint;  // allows the adjustment of the midpoint of the motor servo
+    AP_Int16             _motor_four_midpoint;  // allows the adjustment of the midpoint of the motor servo
+
     // motor output variables
     bool                motor_enabled[AP_MOTORS_MAX_NUM_MOTORS];    // true if motor is enabled
     int16_t             _throttle_radio_min;        // minimum PWM from RC input's throttle channel (i.e. minimum PWM input from receiver, RC3_MIN)
