@@ -103,15 +103,26 @@ public:
     static const struct AP_Param::GroupInfo        var_info[];
 
     //Tirrells Parameters
-    AP_Int16             _M_1_MP;  // allows the adjustment of the midpoint of the motor servo
-    AP_Int16             _M_2_MP;  // allows the adjustment of the midpoint of the motor servo
-    AP_Int16             _M_3_MP;  // allows the adjustment of the midpoint of the motor servo
-    AP_Int16             _M_4_MP;  // allows the adjustment of the midpoint of the motor servo
+    AP_Int16             _SP_1_R;  // allows the adjustment of the midpoint of the motor servo roll axis
+    AP_Int16             _SP_2_R;  // allows the adjustment of the midpoint of the motor servo roll axis
+    AP_Int16             _SP_3_R;  // allows the adjustment of the midpoint of the motor servo roll axis
+    AP_Int16             _SP_4_R;  // allows the adjustment of the midpoint of the motor servo roll axis
 
-    AP_Float             _M_1_Dir;  // allows the adjustment of the midpoint of the motor servo
-    AP_Float             _M_2_Dir;  // allows the adjustment of the midpoint of the motor servo
-    AP_Float             _M_3_Dir;  // allows the adjustment of the midpoint of the motor servo
-    AP_Float             _M_4_Dir;  // allows the adjustment of the midpoint of the motor servo
+    AP_Int16             _SP_1_P;  // allows the adjustment of the midpoint of the motor servo pitch axis
+    AP_Int16             _SP_2_P;  // allows the adjustment of the midpoint of the motor servo pitch axis
+    AP_Int16             _SP_3_P;  // allows the adjustment of the midpoint of the motor servo pitch axis
+    AP_Int16             _SP_4_P;  // allows the adjustment of the midpoint of the motor servo pitch axis
+
+    AP_Int16             _DIR_1_R;  // set the servo rotation direction
+    AP_Int16             _DIR_2_R;  // set the servo rotation direction
+    AP_Int16             _DIR_3_R;  // set the servo rotation direction
+    AP_Int16             _DIR_4_R;  // set the servo rotation direction
+
+    AP_Int16             _DIR_1_P;  // set the servo rotation direction
+    AP_Int16             _DIR_2_P;  // set the servo rotation direction
+    AP_Int16             _DIR_3_P;  // set the servo rotation direction
+    AP_Int16             _DIR_4_P;  // set the servo rotation direction
+
 
 protected:
 
@@ -141,6 +152,9 @@ protected:
 
     // convert thrust (0~1) range back to pwm range
     int16_t             calc_thrust_to_pwm(float thrust_in) const;
+
+    // convert thrust (1000-2000) range back to 0-1 range
+    float             calc_pwm_to_angle(float pwm_in) const;
 
     // calculate spin up to pwm range
     int16_t             calc_spin_up_to_pwm() const;
